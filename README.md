@@ -13,3 +13,5 @@ bunları yükledikten sonra
 python build.py
 ```
 yapman yeterli olucaktır
+
+# Derleme işlemi  bittikten sonra exe dosyası bin klasörünün içindeki setup.exe dosyasını çalıştırabilirsiniz
