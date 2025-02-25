@@ -7,6 +7,9 @@ packages_to_install = [
     "pyside6",
     "reportlab",
     "python-barcode",
+    "pyserial",
+    "pyusb",
+    "pillow",
     
 ]
 
