@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="main">
+    <file>main_screen_text.png</file>
+    <file>invalid.png</file>
+    <file>valid.png</file>
+    <file>db.png</file>
+  </qresource>
+</RCC>
