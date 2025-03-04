@@ -22,6 +22,7 @@ def compile_with_nuitka(debug,**kwargs):
         if value.get("extra_files"):
             for file in value["extra_files"]:
                 command += " --include-data-files=%s=%s " % (file["src"], file["dst"])
+        command += " --no-progress-bar"
         command += " %s" % (key)
         command += " --output-dir=bin"
     if debug:
@@ -62,7 +63,7 @@ def build_setup():
 files = {
     r"sources\db_main.py":{
         "icon":get_resource_dir("db.ico"),
-        "dbg":True,
+        "dbg":False, # disables windows console mode
         "pyside6":True,
     }
 }

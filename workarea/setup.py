@@ -1,3 +1,13 @@
+import glob
+import backend
+from backend.backend import Vars
+from backend.util import *
+files = [
+    {
+        "src": "bin\\db_main.exe",
+        "dst": ".\\db_main.exe"
+    }
+]
 
 from backend.msgbox import *
 from backend.vars import Vars

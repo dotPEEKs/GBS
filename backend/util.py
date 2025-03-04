@@ -1,4 +1,7 @@
 import os
+import string
+import random
+import platform
 import winreg
 import subprocess
 from pathlib import Path
@@ -68,7 +71,8 @@ def list_printers_pyusb():
     for device in devices:
         print(f"ID: {hex(device.idVendor)}:{hex(device.idProduct)} - {device}")
 
-
+def CreateRandChar():
+    return "".join(random.sample(string.ascii_letters, 8))
 def CreateDesktopShortcuts(exe_path):
     lnk_path = os.path.basename(os.path.splitext(exe_path)[0]) + ".lnk"
     lnk_path = os.path.join(get_user_desktop(), lnk_path)

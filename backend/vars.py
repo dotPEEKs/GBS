@@ -10,19 +10,19 @@ class Vars:
             "handler":ITF,
             "length":6
         },
-        "EAN-8":{
+        "EAN8":{
             "handler":EAN8,
             "length":8
         },
-        "EAN-13":{
+        "EAN13":{
             "handler":EAN13,
             "length":13
         },
-        "EAN-14":{
+        "EAN14":{
             "handler":EAN14,
             "length":14
         },
-        "ISBN-10":{
+        "ISBN10":{
             "handler":ISBN10,
             "length":10
         }

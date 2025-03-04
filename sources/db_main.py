@@ -12,8 +12,9 @@ from backend.util import init
 from backend.backend import *
 from backend.msgbox import *
 from backend.vars import Vars
+from backend.investigator import Investigator
 from PySide6.QtWidgets import QApplication,QMainWindow
-
+@Investigator
 class db_main(QMainWindow):
     def __init__(self,database: Database):
         super().__init__()
@@ -47,6 +48,7 @@ class db_main(QMainWindow):
                 text = self.db.get_last_error(),
                 box = Dialogs.DIA_OK | Icon.ICO_EXCLAMATION
             )
+            raise Exception("This is fucking error")
     def check_brcode_type(self):
         text_table = {
             6:{
@@ -68,18 +70,22 @@ class db_main(QMainWindow):
         if not text_table.get(len(self.ui.item_barcode.text())) is None:
             self.ui.brcode_type.setText(text_table[len(self.ui.item_barcode.text())]["text"])
         else:
+            raise Exception("Fatal error")
             self.ui.brcode_type.setText("Bilinmeyen barkod tipi :/")
     def check_name(self):
         if len(self.ui.item_barcode.text()) < 1:
             self.ui.brcode_type.setText("Lütfen ürün ismi giriniz ")
         else:
             self.ui.item_barcode.setText("")
-if __name__ == "__main__":
+
+def main():
     init()
     database = Database(Vars.json_path)
-    database = Database(db_path = Vars.json_path)
+    database = Database(db_path=Vars.json_path)
     database.init_db()
     app = QApplication(sys.argv)
-    window = db_main(database = database)
+    window = db_main(database=database)
     window.show()
     sys.exit(app.exec())
+if __name__ == "__main__":
+    main()

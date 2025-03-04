@@ -1,0 +1,2 @@
+class InvalidDbObject(Exception):
+    pass
