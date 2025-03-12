@@ -5,16 +5,17 @@ import os
 # -*- coding: <encoding name> -*-
 import sys
 import pprint
-from argparse import ArgumentParser
 
-from ui.db_add import *
+from argparse import ArgumentParser
+sys.path.append(os.path.join(os.path.dirname(__file__),".."))
+from ui.ui_db_add import *
 from backend.util import init
 from backend.backend import *
 from backend.msgbox import *
 from backend.vars import Vars
 from backend.investigator import Investigator
 from PySide6.QtWidgets import QApplication,QMainWindow
-@Investigator
+
 class db_main(QMainWindow):
     def __init__(self,database: Database):
         super().__init__()

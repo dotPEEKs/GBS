@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="main">
+    <file>clean.png</file>
+    <file>printer.png</file>
     <file>main_screen_text.png</file>
     <file>invalid.png</file>
     <file>valid.png</file>

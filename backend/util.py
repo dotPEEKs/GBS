@@ -4,6 +4,7 @@ import random
 import platform
 import winreg
 import subprocess
+import win32print
 from pathlib import Path
 from backend.vars import Vars
 from win32com.client import Dispatch
@@ -53,7 +54,7 @@ def get_barcode_len(barcode):
             return barcodes["length"]
     return 0
 
-def list_printers():
+"""def list_printers():
     print("Pyserial sonuçları")
     import serial.tools.list_ports
     ports = serial.tools.list_ports.comports()
@@ -70,6 +71,11 @@ def list_printers_pyusb():
 
     for device in devices:
         print(f"ID: {hex(device.idVendor)}:{hex(device.idProduct)} - {device}")
+
+"""
+
+def list_physical_printers():
+    return win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL,None,1)
 
 def CreateRandChar():
     return "".join(random.sample(string.ascii_letters, 8))

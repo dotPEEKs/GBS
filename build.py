@@ -2,6 +2,9 @@ import os
 import glob
 import json
 import subprocess
+
+from winioctlcon import FSCTL_GET_REPAIR
+
 from backend.msgbox import *
 from backend.util import get_resource_dir,remove_dir
 
@@ -61,10 +64,10 @@ def build_setup():
             os.remove(fullpath)
     print("All done! now you can run setup.exe :) ")
 files = {
-    r"sources\db_main.py":{
+    r"sources\main_window.py":{
         "icon":get_resource_dir("db.ico"),
-        "dbg":False, # disables windows console mode
-        "pyside6":True,
+        "dbg":True, # disables windows console mode
+        "pyside6":True
     }
 }
 def main():
@@ -72,6 +75,6 @@ def main():
     remove_dir("workarea")
     remove_dir("bin")
     compile_with_nuitka(False, **files)
-    build_setup()
+    #build_setup()
 if __name__ == "__main__":
     main()
