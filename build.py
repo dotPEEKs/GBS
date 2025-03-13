@@ -3,9 +3,6 @@ import glob
 import json
 import subprocess
 
-from winioctlcon import FSCTL_GET_REPAIR
-
-from backend.msgbox import *
 from backend.util import get_resource_dir,remove_dir
 
 

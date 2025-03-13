@@ -6,7 +6,8 @@ from ui.ui_main_window import Ui_MainWindow
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
 from backend.backend import *
-
+from backend.containers import BRCodeContainer
+from backend.pdf_gen import PDFGenerator
 class GBSMain(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -15,19 +16,18 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","ONAY"])
         self.db = Database(Vars.json_path)
         self.set_all_printers()
-        self.set_all_brcode()
-        self.barcode_container = []
-        self.set_all_brcode()
+        self.barcode_container = BRCodeContainer()
         self.tableWidget.setRowCount(len(self.db.get_db()["barcodes"]))
-        self.pushButton_2.clicked.connect(self.walk_on_table_widget)
+        self.pushButton.clicked.connect(self.print_all_barcode)
+        self.pushButton_2.clicked.connect(self.clear_all_selected_barcodes)
+        self.set_all_brcode()
     def set_all_printers(self):
         for printer in list_physical_printers()[0][1:]:
             if printer != "" and isinstance(printer,str):
                 self.comboBox.addItem(printer)
     def set_all_brcode(self):
         for index,barcode_data in enumerate(self.db.get_db()["barcodes"].items()):
-            item_name = barcode_data[0]
-            item_name_widget = QTableWidgetItem(item_name)
+            item_name_widget = QTableWidgetItem(barcode_data[0])
             barcode_type_widget = QTableWidgetItem(barcode_data[1]["barcode_type"])
             item_barcode = QTableWidgetItem(barcode_data[1]["item_barcode"])
             self.tableWidget.setItem(index,0,item_name_widget)
@@ -56,16 +56,28 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         widget.setLayout(layout)
         return widget
-    def walk_on_table_widget(self):
+    def print_all_barcode(self):
         for row in range(self.tableWidget.rowCount()):
-            line_edit = self.tableWidget.cellWidget(row,2) # qtablewidget içersindeki kolon ve sütünlardaki verilere ulaşmak için indexleri veriyoruz fakat widget içersine yerleştirildiği için aşağıdaki findchild methodunu kullanıyoruz
-
-            # fakat normal item methodu kullanılamaz çünkü sadece qtablewidgetitem ile çalışabilir :)
-            checkbox = self.tableWidget.cellWidget(row,3)
-            brcode_count = line_edit.findChild(QLineEdit)
+            checkbox = self.tableWidget.cellWidget(row,4)
             checkbox_status = checkbox.findChild(QCheckBox)
-            if checkbox_status.isChecked():
-                print(self.tableWidget.item(row,1).text())
+            if checkbox_status.isChecked(): # is selected ?
+                item_name = self.tableWidget.item(row,0).text()
+                item_barcode = self.tableWidget.item(row,1).text()
+                qline_edit_data = self.tableWidget.cellWidget(row,2).findChild(QLineEdit)
+                item_barcode_type = self.tableWidget.item(row,3).text()
+                self.barcode_container.push_back(
+                    item_name = item_name,
+                    item_brcode_type = item_barcode_type,
+                    item_brcode = item_barcode,
+                    brcode_count = qline_edit_data.text()
+                )
+                pdfgen = PDFGenerator(self.barcode_container)
+                pdfgen.generate_pdf_file(text_x_pos=15,text_y_pos=60)
+    def clear_all_selected_barcodes(self):
+        for row in range(self.tableWidget.rowCount()):
+            checkbox = self.tableWidget.cellWidget(row,4).findChild(QCheckBox)
+            if checkbox.isChecked():
+                checkbox.setChecked(False)
 if __name__ == "__main__":
     app = QApplication([])
     window = GBSMain()
