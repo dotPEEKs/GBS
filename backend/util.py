@@ -1,4 +1,5 @@
 import os
+import unicodedata
 import string
 import random
 import platform
@@ -42,7 +43,9 @@ def init():
     if not os.path.exists(Vars.json_path):
         with open(Vars.json_path,"w") as f:
             pass
-
+def convert_turkish_char_to_eng(input):
+    normalized = unicodedata.normalize("NFD",input)
+    return "".join(char for char in normalized if not unicodedata.combining(char)).replace("ı","i")
 def get_barcode_type(barcode) -> dict:
     for barcode_name,barcodes in Vars.barcodes_length.items():
         if len(barcode) == barcodes["length"]:

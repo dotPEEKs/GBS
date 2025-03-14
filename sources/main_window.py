@@ -61,18 +61,18 @@ class GBSMain(QMainWindow,Ui_MainWindow):
             checkbox = self.tableWidget.cellWidget(row,4)
             checkbox_status = checkbox.findChild(QCheckBox)
             if checkbox_status.isChecked(): # is selected ?
-                item_name = self.tableWidget.item(row,0).text()
+                item_name =  self.tableWidget.item(row,0).text()
                 item_barcode = self.tableWidget.item(row,1).text()
                 qline_edit_data = self.tableWidget.cellWidget(row,2).findChild(QLineEdit)
                 item_barcode_type = self.tableWidget.item(row,3).text()
                 self.barcode_container.push_back(
-                    item_name = item_name,
+                    item_name = convert_turkish_char_to_eng(item_name),
                     item_brcode_type = item_barcode_type,
                     item_brcode = item_barcode,
                     brcode_count = qline_edit_data.text()
                 )
-                pdfgen = PDFGenerator(self.barcode_container)
-                pdfgen.generate_pdf_file(text_x_pos=15,text_y_pos=60)
+        pdfgen = PDFGenerator(self.barcode_container)
+        pdfgen.create_pdf_doc(show_pdf_file=True)
     def clear_all_selected_barcodes(self):
         for row in range(self.tableWidget.rowCount()):
             checkbox = self.tableWidget.cellWidget(row,4).findChild(QCheckBox)

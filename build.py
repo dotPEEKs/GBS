@@ -68,9 +68,7 @@ files = {
     }
 }
 def main():
-    print("Cleaning up :)")
-    remove_dir("workarea")
-    remove_dir("bin")
+
     compile_with_nuitka(False, **files)
     #build_setup()
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 
-from backend import InvalidDbObject
-class BRCodeContainer:
+from backend import *
+class BRCodeContainer(Repr):
     def __init__(self,**kwargs):
         self.container = {**kwargs}
     def push_back(self,item_name: str,item_brcode_type,item_brcode,brcode_count):
@@ -29,7 +29,18 @@ class BRCodeContainer:
         if db_object.get_db().get("barcodes") is None:
             raise InvalidDbObject("input parameter is invalid parameter must be DB object not %s" % db_object.__class__.__name__)
         self.container.update(db_object.get_db().get("barcodes"))
-class FileContainer:
-    def __init__(self,fname: str,container):
-        self.fname = fname
-        self.container = container
+class PDFGenContainer(Repr):
+    def __init__(self,filename: str,item_name,item_barcode_type,item_barcode):
+        self.fname = filename
+        self.item_name = item_name
+        self.item_barcode_type = item_barcode_type
+        self.item_barcode = item_barcode
+
+class PDFGenPageSizesContainer(Repr):
+    def __init__(self,xpos = 50,ypos = 700,barcode_width = 150,barcode_height = 50,spacing_xpos = 30,spacing_ypos = 20):
+        self.xpos = xpos
+        self.ypos = ypos
+        self.barcode_width = barcode_width
+        self.barcode_height = barcode_height
+        self.spacing_xpos = spacing_xpos
+        self.spacing_ypos = spacing_ypos
