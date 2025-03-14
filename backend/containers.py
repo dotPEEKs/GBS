@@ -29,6 +29,8 @@ class BRCodeContainer(Repr):
         if db_object.get_db().get("barcodes") is None:
             raise InvalidDbObject("input parameter is invalid parameter must be DB object not %s" % db_object.__class__.__name__)
         self.container.update(db_object.get_db().get("barcodes"))
+    def size(self):
+        return len(self.container)
 class PDFGenContainer(Repr):
     def __init__(self,filename: str,item_name,item_barcode_type,item_barcode):
         self.fname = filename

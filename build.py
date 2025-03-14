@@ -68,8 +68,7 @@ files = {
     }
 }
 def main():
-
     compile_with_nuitka(False, **files)
-    #build_setup()
+    build_setup()
 if __name__ == "__main__":
     main()

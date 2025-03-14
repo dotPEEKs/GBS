@@ -13,7 +13,9 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         QMainWindow.__init__(self)
         self.setWindowTitle("GENEL BARKOD SİSTEMİ")
         self.setupUi(self)
-        self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","ONAY"])
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","BARKOD TIPI","ADET","SEÇ"])
         self.db = Database(Vars.json_path)
         self.set_all_printers()
         self.barcode_container = BRCodeContainer()
@@ -71,11 +73,14 @@ class GBSMain(QMainWindow,Ui_MainWindow):
                     item_brcode = item_barcode,
                     brcode_count = qline_edit_data.text()
                 )
-        pdfgen = PDFGenerator(self.barcode_container)
-        pdfgen.create_pdf_doc(show_pdf_file=True)
+        if self.barcode_container.size() >= 1:
+            pdfgen = PDFGenerator(self.barcode_container)
+            pdfgen.create_pdf_doc(show_pdf_file=True)
     def clear_all_selected_barcodes(self):
         for row in range(self.tableWidget.rowCount()):
             checkbox = self.tableWidget.cellWidget(row,4).findChild(QCheckBox)
+            qlineedit = self.tableWidget.cellWidget(row,2).findChild(QLineEdit)
+            qlineedit.setText("1")
             if checkbox.isChecked():
                 checkbox.setChecked(False)
 if __name__ == "__main__":
