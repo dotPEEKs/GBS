@@ -9,7 +9,7 @@ import win32print
 from pathlib import Path
 from backend.vars import Vars
 from win32com.client import Dispatch
-
+from backend.enum import DigitsEnums
 def get_reg(name,path):
     try:
         registry_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0,
@@ -50,12 +50,12 @@ def get_barcode_type(barcode) -> dict:
     for barcode_name,barcodes in Vars.barcodes_length.items():
         if len(barcode) == barcodes["length"]:
             return barcode_name,barcodes["handler"]
-
+    return DigitsEnums.ENUM_BAD_PROGRESS
 def get_barcode_len(barcode):
     for _,barcodes in barcodes_length.items():
         if len(barcode) == barcodes["length"]:
             return barcodes["length"]
-    return 0
+    return DigitsEnums.ENUM_BAD_PROGRESS
 
 """def list_printers():
     print("Pyserial sonuçları")
@@ -63,7 +63,7 @@ def get_barcode_len(barcode):
     ports = serial.tools.list_ports.comports()
     for port in ports:
         print(f"Port: {port.device}, Name: {port.name}, Description: {port.description}")
-
+r
 def list_printers_pyusb():
     print("Pyusb sonuçları")
     import usb.core
@@ -76,9 +76,10 @@ def list_printers_pyusb():
         print(f"ID: {hex(device.idVendor)}:{hex(device.idProduct)} - {device}")
 
 """
-
 def list_physical_printers():
-    return win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL,None,1)
+    printers = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL,None,1)
+    for printer in printers:
+        pass
 
 def CreateRandChar():
     return "".join(random.sample(string.ascii_letters, 8))

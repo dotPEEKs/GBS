@@ -8,8 +8,6 @@ from backend.util import get_resource_dir,remove_dir
 
 def get_source(fname: str):
     return os.path.join("sources", fname)
-
-
 def compile_with_nuitka(debug,**kwargs):
     if not os.path.exists("bin"):
         os.makedirs("bin")
@@ -25,9 +23,9 @@ def compile_with_nuitka(debug,**kwargs):
         command += " --no-progress-bar"
         command += " %s" % (key)
         command += " --output-dir=bin"
-    if debug:
-        return command
-    subprocess.call(command.split(), shell=True)
+        if debug:
+            return command
+        subprocess.call(command.split(), shell=True)
 
 
 def build_setup():
@@ -52,6 +50,7 @@ def build_setup():
             "extra_files":extra_files_options
         }
     }
+    print(setup_file_options[r"workarea\\setup.py"]["extra_files"])
     compile_with_nuitka(False,**setup_file_options)
     for files in os.listdir("bin"):
         fullpath = os.path.join("bin", files)
@@ -60,10 +59,20 @@ def build_setup():
         elif os.path.isfile(fullpath) and os.path.basename(fullpath) != "setup.exe":
             os.remove(fullpath)
     print("All done! now you can run setup.exe :) ")
+
 files = {
     r"sources\main_window.py":{
         "icon":get_resource_dir("db.ico"),
         "dbg":True, # disables windows console mode
+        "pyside6":True,
+        "extra_files":[{
+            "src":r".\resources\font.ttf",
+            "dst":r".\font.ttf"
+        }]
+    },
+    r"sources\db_main.py":{
+        "icon":get_resource_dir("db.ico"),
+        "dbg":True,
         "pyside6":True
     }
 }

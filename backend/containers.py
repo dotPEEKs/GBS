@@ -1,9 +1,10 @@
+import win32print
 
 from backend import *
 class BRCodeContainer(Repr):
     def __init__(self,**kwargs):
         self.container = {**kwargs}
-    def push_back(self,item_name: str,item_brcode_type,item_brcode,brcode_count):
+    def push_back(self,item_name,item_brcode_type,item_brcode,brcode_count):
         self.container[item_name] = {"barcode_type":item_brcode_type,"item_barcode":item_brcode,"item_count":brcode_count}
     def get(self):
         return self.container
@@ -46,3 +47,9 @@ class PDFGenPageSizesContainer(Repr):
         self.barcode_height = barcode_height
         self.spacing_xpos = spacing_xpos
         self.spacing_ypos = spacing_ypos
+
+class PrinterContainer(Repr):
+    def __init__(self,hwid: int,printer_name: str):
+        self.hwid = hwid
+        self.printer_name = printer_name
+

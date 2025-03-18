@@ -1,32 +1,36 @@
 import os
 import sys
 
+
 sys.path.append(os.path.join(os.path.dirname(__file__),".."))
+from backend.printer import Printer
 from ui.ui_main_window import Ui_MainWindow
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
 from backend.backend import *
 from backend.containers import BRCodeContainer
 from backend.pdf_gen import PDFGenerator
+from backend import check_font_file
 class GBSMain(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setWindowTitle("GENEL BARKOD SİSTEMİ")
         self.setupUi(self)
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","BARKOD TIPI","ADET","SEÇ"])
+        self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","SEÇ"])
         self.db = Database(Vars.json_path)
-        self.set_all_printers()
+        self.comboBox.view().setMinimumWidth(100)
         self.barcode_container = BRCodeContainer()
         self.tableWidget.setRowCount(len(self.db.get_db()["barcodes"]))
         self.pushButton.clicked.connect(self.print_all_barcode)
         self.pushButton_2.clicked.connect(self.clear_all_selected_barcodes)
         self.set_all_brcode()
+        self.set_all_printers()
     def set_all_printers(self):
-        for printer in list_physical_printers()[0][1:]:
-            if printer != "" and isinstance(printer,str):
-                self.comboBox.addItem(printer)
+        for printer in Printer.list_printer():
+            self.comboBox.addItem(printer.printer_name)
     def set_all_brcode(self):
         for index,barcode_data in enumerate(self.db.get_db()["barcodes"].items()):
             item_name_widget = QTableWidgetItem(barcode_data[0])
@@ -84,6 +88,7 @@ class GBSMain(QMainWindow,Ui_MainWindow):
             if checkbox.isChecked():
                 checkbox.setChecked(False)
 if __name__ == "__main__":
+    check_font_file(__file__)
     app = QApplication([])
     window = GBSMain()
     window.show()

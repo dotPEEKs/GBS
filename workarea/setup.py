@@ -6,8 +6,13 @@ files = [
     {
         "src": "bin\\db_main.exe",
         "dst": ".\\db_main.exe"
+    },
+    {
+        "src": "bin\\main_window.exe",
+        "dst": ".\\main_window.exe"
     }
 ]
+import os
 
 from backend.msgbox import *
 from backend.vars import Vars
@@ -36,4 +41,5 @@ def copy_exe_files():
            print("Hata bilgileri paketleniyor .....")
 
 copy_exe_files()
+print(os.listdir(os.getcwd()))
 input()

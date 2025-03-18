@@ -1,3 +1,4 @@
+import os
 
 from backend.msgbox import *
 from backend.vars import Vars
@@ -26,4 +27,5 @@ def copy_exe_files():
            print("Hata bilgileri paketleniyor .....")
 
 copy_exe_files()
+print(os.listdir(os.getcwd()))
 input()

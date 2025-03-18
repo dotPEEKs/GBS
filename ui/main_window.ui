@@ -28,22 +28,28 @@
 
 QFrame {
 	
-	background-color: rgb(94, 101, 107);
+	background-color: rgb(51, 51, 49)
 }
 
-QTableWidget {
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 40px; /* Köşe yuvarlaklığı */
-    padding: 5px;
+QHeaderView {
+ 	background-color: transparent;
 }
 
-</string>
+
+QFrame#frame {
+ 	 border-radius: 30px;
+}
+
+QPushButton {
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QFrame" name="frame">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="frameShape">
        <enum>QFrame::Shape::NoFrame</enum>
       </property>
@@ -51,6 +57,33 @@ QTableWidget {
        <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame_16">
+         <property name="styleSheet">
+          <string notr="true">background-color: none;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Shape::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Shadow::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="topMargin">
+           <number>7</number>
+          </property>
+          <property name="rightMargin">
+           <number>4</number>
+          </property>
+         </layout>
+        </widget>
+       </item>
        <item>
         <widget class="QFrame" name="frame_12">
          <property name="frameShape">
@@ -152,7 +185,8 @@ QTableWidget {
              <item>
               <widget class="QFrame" name="frame_4">
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">background-color: rgb(92, 91, 88);
+border-radius: 10px;</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::Shape::NoFrame</enum>
@@ -178,18 +212,84 @@ QTableWidget {
                   <property name="styleSheet">
                    <string notr="true">border-radius: 30px;</string>
                   </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Shape::NoFrame</enum>
+                  </property>
                   <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
+                  </property>
+                  <property name="horizontalScrollBarPolicy">
                    <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
                   </property>
                   <property name="editTriggers">
                    <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
                   </property>
+                  <property name="selectionBehavior">
+                   <enum>QAbstractItemView::SelectionBehavior::SelectColumns</enum>
+                  </property>
+                  <property name="showGrid">
+                   <bool>true</bool>
+                  </property>
+                  <property name="rowCount">
+                   <number>40</number>
+                  </property>
+                  <property name="columnCount">
+                   <number>5</number>
+                  </property>
                   <attribute name="horizontalHeaderVisible">
                    <bool>true</bool>
+                  </attribute>
+                  <attribute name="horizontalHeaderHighlightSections">
+                   <bool>false</bool>
                   </attribute>
                   <attribute name="verticalHeaderCascadingSectionResizes">
                    <bool>true</bool>
                   </attribute>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <row/>
+                  <column/>
+                  <column/>
+                  <column/>
+                  <column/>
+                  <column/>
                  </widget>
                 </item>
                </layout>
@@ -206,6 +306,12 @@ QTableWidget {
                <layout class="QHBoxLayout" name="horizontalLayout_2">
                 <item>
                  <widget class="QFrame" name="frame_6">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="maximumSize">
                    <size>
                     <width>630</width>
@@ -221,6 +327,12 @@ QTableWidget {
                   <layout class="QHBoxLayout" name="horizontalLayout_4">
                    <item>
                     <widget class="QFrame" name="frame_8">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="maximumSize">
                       <size>
                        <width>303</width>
@@ -242,6 +354,12 @@ QTableWidget {
                       </property>
                       <item>
                        <widget class="QFrame" name="frame_10">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Ignored" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="frameShape">
                          <enum>QFrame::Shape::NoFrame</enum>
                         </property>
@@ -250,7 +368,17 @@ QTableWidget {
                         </property>
                         <layout class="QVBoxLayout" name="verticalLayout_4">
                          <item>
-                          <widget class="QComboBox" name="comboBox"/>
+                          <widget class="QComboBox" name="comboBox">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="sizeAdjustPolicy">
+                            <enum>QComboBox::SizeAdjustPolicy::AdjustToContentsOnFirstShow</enum>
+                           </property>
+                          </widget>
                          </item>
                          <item>
                           <widget class="QPushButton" name="pushButton_3">
@@ -280,6 +408,13 @@ QTableWidget {
                             <enum>QFrame::Shadow::Raised</enum>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_5">
+                            <item>
+                             <widget class="QPushButton" name="save_btn">
+                              <property name="text">
+                               <string>Kaydet</string>
+                              </property>
+                             </widget>
+                            </item>
                             <item>
                              <widget class="QPushButton" name="pushButton">
                               <property name="text">
@@ -326,6 +461,16 @@ QTableWidget {
                         </property>
                         <property name="scaledContents">
                          <bool>true</bool>
+                        </property>
+                        <property name="wordWrap">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_7">
+                        <property name="text">
+                         <string>Eğer ki belgeyi kaydetmek istiyorsanız kaydet'e tıklayınız (masaüstüne otomatik oluşturulacaktır)</string>
                         </property>
                         <property name="wordWrap">
                          <bool>true</bool>
