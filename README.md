@@ -1,28 +1,41 @@
-Gereksinimler : 
-* nuitka
-* pyserial
-* pyusb
-* pyside6
-* pypiwin32
-* python-barcode
-* reportlab
-* pillow
-
-bunları yükledikten sonra
-```
-python build.py
-```
-yapman yeterli olucaktır
-
-# Derleme işlemi  bittikten sonra exe dosyası bin klasörünün içindeki setup.exe dosyasını çalıştırabilirsiniz
-
-* Kod düzenlenmediği için spagetti kod durumunda olabilir :/
-
-*Windows 7'de çalıştırmak istiyorsanız python 3.6 sürümünü indirin o zaman sorunsuz çalışacaktır aksi taktirde çalışmaz
-
-* Windows 10 veya üstü herhangi bir işletim sisteminde direkt çalışabilir
+* DERLEME BILGILERI AŞAĞIDADIR
+Güncelleme 
 
 
-* Ayrıca pdf dosyasındaki ürün adlarını hizalaması eklenmemiştir bu yüzden yazılar düzgün görünmeyebilir
+#NOT PROGRAM EXE DOSYASI IÇERSINDE HATADAN DOLATI ÇALIŞMAYACAKTIR
 
-* GUI Tarafında eksiklikler mevcuttur
+* KAYDET BUTONUNA IŞLEVSELLIK GETIRELECEK
+
+* FONT DOSYASI LISANSI EKLENECEK
+
+* FONT HATASI DÜZELTILECEK
+
+* GEREKSIZ IMPORTLAR KALDIRILACAK(PYUSB PYSERIAL)
+
+# GÜNCELLEME BILGILERI
+
+* YAZI HIZALAMA SORUNU GIDERILDI
+
+* GUI IYILEŞTIRILMELERI YAPILDI 
+
+* BILINEN HATALAR DÜZELTILDI 
+
+# SON GÜNCELLEMEDEN KALAN BILINEN HATALAR
+
+* EXE DOSYASINA DÖNÜŞTÜRÜLDÜĞÜNDE FONT HATASI ALINIYOR
+
+# POTANSIYEL OLUŞABILECEK HATALAR
+
+* WIN - 7/8 PLATFORMUNDA HATALAR MEVCUT OLABILIR
+
+# DERLEME VE BUILD ETME
+
+* NOT : WIN 10'DA OLUŞTURULAN EXE DOSYASI WIN7'DE ÇALIŞMAYACAKTIR WIN7'DE ÇALIŞMASI IÇIN WIN7'DE OLUŞTURULUP PYTHON VERSIYONU 3.7 OLMALIDIR(DENENMIŞTIR)
+
+WIN10 VEYA USTUNDE VERSIYON FARK ETMEZ
+
+AKSI TAKDIRDE OLUŞAN EXE DOSYASI API-MS-XXXXX.dll EKSIK HATASI VERICEKTIR
+
+* ILK BAŞTA setup_env.py dosyası çalıştırılıp ardından setup.py DOSYASI ÇALIŞTIRILMALIDIR
+
+
