@@ -10,5 +10,5 @@
 
 * GEREKSİZ İMPORTLAR SİLİNECEK
 
-
-(https://github.com/dotPEEKs/GBS/releases/tag/Release)
+# Otomatik derlenen exe'yi indirmek için
+* https://github.com/dotPEEKs/GBS/releases/tag/Release
