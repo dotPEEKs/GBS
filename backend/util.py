@@ -30,7 +30,7 @@ def get_user_desktop():
     reg_name = "Desktop"
     reg_path = r"Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders"
     desktop_path = os.path.normpath(get_reg(reg_name,reg_path))
-    if desktop_path.starswith("%")
+    if desktop_path.startswith("%"):
         env = desktop_path[0:desktop_path.index("%",1)].replace("%","")
         desktop_path = os.path.join(os.getenv(env),"Desktop")
     return desktop_path #BUG FIXED
