@@ -9,3 +9,6 @@
 * PROGRAM VERİTABANINDA HERHANGİ BİR İTEM OLMAMASINA RAĞMEN HALA ÇALIŞIYOR
 
 * GEREKSİZ İMPORTLAR SİLİNECEK
+
+
+(https://github.com/dotPEEKs/GBS/releases/tag/Release)
