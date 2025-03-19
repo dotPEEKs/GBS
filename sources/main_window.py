@@ -89,6 +89,7 @@ class GBSMain(QMainWindow,Ui_MainWindow):
                 checkbox.setChecked(False)
 if __name__ == "__main__":
     check_font_file(__file__)
+
     app = QApplication([])
     window = GBSMain()
     window.show()

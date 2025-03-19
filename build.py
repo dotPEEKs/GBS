@@ -37,7 +37,7 @@ def build_setup():
         if os.path.basename(file) == "setup.exe":
             continue
         extra_files_options.append({"src": file, "dst": ".\\" + os.path.basename(file)})
-    with open(get_source("demo_setup1.py"), "r") as setup_file:
+    with open(get_source("setup.py"), "r") as setup_file:
         content = setup_file.read()
         with open("workarea\\setup.py", "w") as setup_file:
             content = import_data + "files = " + json.dumps(extra_files_options, indent=4) + "\n" + content
@@ -68,7 +68,7 @@ files = {
         "extra_files":[{
             "src":r".\resources\font.ttf",
             "dst":r".\font.ttf"
-        }]
+        }],
     },
     r"sources\db_main.py":{
         "icon":get_resource_dir("db.ico"),

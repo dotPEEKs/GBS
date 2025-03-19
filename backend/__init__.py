@@ -22,10 +22,11 @@ class Repr:
             return class_name
         repr_str = "<%s " % (class_name) + "\n" + extract_class_members(extract_to_class) + ">"
         return repr_str
-
+def is_program_running_exe():
+    return globals().get("__compiled__",False) # if program running exe nuitka uses __compiled__ not sys.frozen
 def check_font_file(path):
     font_src_path = get_resource_dir("font.ttf")
-    if getattr(sys,"frozen",False): # if program running in exe mode
+    if is_program_running_exe():
         font_src_path = os.path.join(os.path.dirname(path),"font.ttf")
     with open(font_src_path,"rb") as src:
         with open(Vars.font_file_path,"wb") as dst:
