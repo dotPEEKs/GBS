@@ -29,10 +29,11 @@ def get_source(fname: str):
 def get_user_desktop():
     reg_name = "Desktop"
     reg_path = r"Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders"
-    if "Windows-7" in platform.platform(): # God damnnnnn win7
-        return os.path.join(os.path.expanduser("~"),"Desktop")
-    return os.path.normpath(get_reg(reg_name,reg_path))
-
+    desktop_path = os.path.normpath(get_reg(reg_name,reg_path))
+    if desktop_path.starswith("%")
+        env = desktop_path[0:desktop_path.index("%",1)].replace("%","")
+        desktop_path = os.path.join(os.getenv(env),"Desktop")
+    return desktop_path #BUG FIXED
 def get_source_path(filename: str):
     base_path = os.path.join(os.path.dirname(__file__),"resources",filename)
     return base_path
@@ -76,10 +77,7 @@ def list_printers_pyusb():
         print(f"ID: {hex(device.idVendor)}:{hex(device.idProduct)} - {device}")
 
 """
-def list_physical_printers():
-    printers = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL,None,1)
-    for printer in printers:
-        pass
+
 
 def CreateRandChar():
     return "".join(random.sample(string.ascii_letters, 8))
