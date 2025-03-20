@@ -1,14 +1,7 @@
-* GÜNCELLEME
+* Güncelleme QTableWidget'da olan köşe butonu kaldırıldı
 
-* PROGRAM GENEL HATLARIYLA SORUNSUZ BİR ŞEKİLDE ÇALIŞABİLİYOR
+* QTableWidget'da olan dikey sütun resizing hatası kaldırıldı
 
-# BİLİNEN EKSİKLER/HATALAR
+* Kod iyileştirilmeleri yapıldı gereksiz kod blokları kaldırıldı
 
-* YAZICI KISMI ÇALIŞMAYABİLİR
-
-* PROGRAM VERİTABANINDA HERHANGİ BİR İTEM OLMAMASINA RAĞMEN HALA ÇALIŞIYOR
-
-* GEREKSİZ İMPORTLAR SİLİNECEK
-
-# Otomatik derlenen exe'yi indirmek için
-* https://github.com/dotPEEKs/GBS/releases/tag/Release
+* Database modülü iyileştirildi
