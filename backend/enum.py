@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import IntEnum
 from enum import auto as Auto
 
-class DigitsEnums:
+class DigitsEnums(IntEnum):
     ENUM_BAD_PROGRESS = Auto()
     BAD_BARCODE_LEN = Auto()
     BAD_BARCODE_TYPE = Auto()

@@ -1,17 +1,10 @@
 import os
 import sys
 import json
-sys.path.insert(0, os.path.abspath('.'))
-from barcode import (
-    EAN13,EAN8,
-    EAN14,
-    ISBN10,ITF
-)
+#sys.path.insert(0, os.path.abspath('.'))
+
 from backend.util import *
-class Backend:
-    """
-    - Önceki özellikleri silindi duruma göre ayarlanacak :)
-    """
+from backend.msgbox import *
 class Database:
     def __init__(self,db_path):
         self.db_path = db_path
@@ -31,14 +24,16 @@ class Database:
                     text = "Aynı üründen veritabanında mevcut ! :)",
                     box = Dialogs.DIA_OK | Icon.ICO_EXCLAMATION
                 )
-            barcode = self.get_db()
-            barcode["barcodes"][item_name] = {
-                "item_barcode":item_barcode,
-                "barcode_type":str(get_barcode_type(item_barcode)[0])
-            }
-            with open(self.db_path,"w") as f:
-                f.write(json.dumps(barcode,indent = 4))
-                result = True
+            if not get_barcode_type(item_barcode) != DigitsEnums.ENUM_BAD_PROGRESS:
+                barcode = self.get_db()
+                barcode["barcodes"][item_name] = {
+                    "item_barcode":item_barcode,
+                    "barcode_type":str(get_barcode_type(item_barcode)[0])
+                }
+                with open(self.db_path,"w") as f:
+                    f.write(json.dumps(barcode,indent = 4))
+                    result = True
+            return result
         except Exception as e:
             self.exceptions = str(e)
         return result

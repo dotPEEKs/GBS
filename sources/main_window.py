@@ -22,9 +22,12 @@ class GBSMain(QMainWindow,Ui_MainWindow):
 
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.centralwidget.setStyleSheet("QTableWidget::item { color: \"black\";}")
-        self.tableWidget.horizontalHeader().setStyleSheet("color: 'black';")
-        self.tableWidget.verticalHeader().setStyleSheet("color: 'black';")
-        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableWidget.horizontalHeader().setStyleSheet("::section { background-color: 'transparent'; \ncolor: 'black';}")
+        self.tableWidget.setStyleSheet("""QTableCornerButton::section { background-color: 'transparent'}""")
+        self.tableWidget.setCornerButtonEnabled(False)
+        self.tableWidget.verticalHeader().setSectionResizeMode(QHeaderView.Fixed) # dikey sekmeyi fare ile resizing yapmayı bloklamak için
+        self.tableWidget.verticalHeader().setStyleSheet("::section { background-color: 'transparent';\n color: 'black'; }")
+        self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers) # bu hücrelerdeki yazıları düzenlenmesini bloklamak için
         self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","SEÇ"])
         self.db = Database(Vars.json_path)
         self.comboBox.view().setMinimumWidth(100)
