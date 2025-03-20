@@ -1,23 +1,29 @@
 import os
 import sys
-
-
 sys.path.append(os.path.join(os.path.dirname(__file__),".."))
 from backend.printer import Printer
 from ui.ui_main_window import Ui_MainWindow
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QIcon
 from backend.backend import *
 from backend.containers import BRCodeContainer
 from backend.pdf_gen import PDFGenerator
 from backend import check_font_file
+from backend.msgbox import *
+from backend.enum import Index
+from backend.enum import Defaults
 class GBSMain(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setWindowTitle("GENEL BARKOD SİSTEMİ")
+        self.setWindowIcon(QIcon(u":/main/db.png"))
         self.setupUi(self)
-        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
+        self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.centralwidget.setStyleSheet("QTableWidget::item { color: \"black\";}")
+        self.tableWidget.horizontalHeader().setStyleSheet("color: 'black';")
+        self.tableWidget.verticalHeader().setStyleSheet("color: 'black';")
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","SEÇ"])
         self.db = Database(Vars.json_path)
@@ -32,25 +38,48 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         for printer in Printer.list_printer():
             self.comboBox.addItem(printer.printer_name)
     def set_all_brcode(self):
-        for index,barcode_data in enumerate(self.db.get_db()["barcodes"].items()):
+        for index,barcode_data in enumerate(self.db.get_db()["barcodes"].items()): # NOT:get_db methodu yeniden adlandırlacak ayrıca direkt barkodları getirecek
             item_name_widget = QTableWidgetItem(barcode_data[0])
             barcode_type_widget = QTableWidgetItem(barcode_data[1]["barcode_type"])
-            item_barcode = QTableWidgetItem(barcode_data[1]["item_barcode"])
-            self.tableWidget.setItem(index,0,item_name_widget)
-            self.tableWidget.setItem(index,1,item_barcode)
-            self.tableWidget.setCellWidget(index,2,self.create_qline_edit_widget())
-            self.tableWidget.setItem(index,3,barcode_type_widget)
-            self.tableWidget.setCellWidget(index,4,self.create_checkbox_widget())
+            barcode_type_widget.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            item_barcode_widget = QTableWidgetItem(barcode_data[1]["item_barcode"])
+            item_barcode_widget.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.tableWidget.setItem(index,Index.INDEX_ITEM_NAME,item_name_widget)
+            self.tableWidget.setItem(index,Index.INDEX_ITEM_BARCODE,item_barcode_widget)
+            self.tableWidget.setCellWidget(index,Index.INDEX_QLINE_EDIT,self.create_qline_edit_widget())
+            self.tableWidget.setItem(index,Index.INDEX_BARCODE_TYPE,barcode_type_widget)
+            self.tableWidget.setCellWidget(index,Index.INDEX_ITEM_CHECKBOX_STATUS,self.create_checkbox_widget())
     def create_horizontal_layout(self):
         horizontal_layout = QHBoxLayout()
         horizontal_layout.setContentsMargins(15,0,15,0) # left top right bottom
         return horizontal_layout
+
+    def create_horizontal_layout_for_line_edit(self):
+        horizontal_layout = QHBoxLayout()
+        horizontal_layout.setContentsMargins(15,0,15,0)  # Daha küçük kenar boşluğu
+        return horizontal_layout
+
     def create_qline_edit_widget(self):
         widget = QWidget()
-        layout = self.create_horizontal_layout() # ekledik çünkü QWidget kendisinden diretk addwidget methodu bulundurmuyor bu yüzden bir layout gerekiyor
+        layout = self.create_horizontal_layout_for_line_edit()
+
         qline_edit = QLineEdit()
-        qline_edit.setPlaceholderText("çıkartılacak olan barkod adedi giriniz ...")
-        qline_edit.setText("1")
+        qline_edit.setPlaceholderText("bir değer girin")
+        ##7a8069
+        qline_edit.setStyleSheet("""
+            QLineEdit {
+                background-color: 'gray';
+                border-radius: 15px;
+                padding: 5px;
+            }
+        """)
+
+        qline_edit.setFixedHeight(30)  # ÇOK ÖNEMLİ EĞER Kİ LİNE EDİT İÇİN BORDER-RADİUS EKLEMEK İSTİYORSAK MUTLAKA BUNU GÖZDEN GEÇİRMELİYİZ !!!
+        #qline_edit.setSizePolicy(QSizePolicy.Preferred,QSizePolicy.Preferred)
+        qline_edit.setText(str(
+            Defaults.DEFAULT_QLINE_EDIT_VALUE
+            )
+        )
         layout.addWidget(qline_edit)
         widget.setLayout(layout)
         return widget
@@ -58,19 +87,27 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         widget = QWidget()
         layout = self.create_horizontal_layout()
         checkbox = QCheckBox()
+        checkbox.setStyleSheet(
+            """
+            QCheckBox::indicator:unchecked {
+                background-color: 'gray';
+                border-radius: 5px;
+            }
+            """
+        )
         layout.addWidget(checkbox)
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         widget.setLayout(layout)
         return widget
     def print_all_barcode(self):
         for row in range(self.tableWidget.rowCount()):
-            checkbox = self.tableWidget.cellWidget(row,4)
+            checkbox = self.tableWidget.cellWidget(row,Index.INDEX_ITEM_CHECKBOX_STATUS)
             checkbox_status = checkbox.findChild(QCheckBox)
             if checkbox_status.isChecked(): # is selected ?
-                item_name =  self.tableWidget.item(row,0).text()
-                item_barcode = self.tableWidget.item(row,1).text()
-                qline_edit_data = self.tableWidget.cellWidget(row,2).findChild(QLineEdit)
-                item_barcode_type = self.tableWidget.item(row,3).text()
+                item_name =  self.tableWidget.item(row,Index.INDEX_ITEM_NAME).text()
+                item_barcode = self.tableWidget.item(row,Index.INDEX_ITEM_BARCODE).text()
+                qline_edit_data = self.tableWidget.cellWidget(row,Index.INDEX_QLINE_EDIT).findChild(QLineEdit)
+                item_barcode_type = self.tableWidget.item(row,Index.INDEX_BARCODE_TYPE).text()
                 self.barcode_container.push_back(
                     item_name = convert_turkish_char_to_eng(item_name),
                     item_brcode_type = item_barcode_type,
@@ -84,13 +121,24 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         for row in range(self.tableWidget.rowCount()):
             checkbox = self.tableWidget.cellWidget(row,4).findChild(QCheckBox)
             qlineedit = self.tableWidget.cellWidget(row,2).findChild(QLineEdit)
-            qlineedit.setText("1")
+            qlineedit.setText(str(Defaults.DEFAULT_QLINE_EDIT_VALUE))
             if checkbox.isChecked():
                 checkbox.setChecked(False)
 if __name__ == "__main__":
     check_font_file(__file__)
-
     app = QApplication([])
     window = GBSMain()
-    window.show()
-    app.exec()
+    if window.db.size() < 1:
+        MessageBox(
+            title = "UYARI",
+            text = "Herhangi bir veri eklenmemiş !!",
+            box = Dialogs.DIA_OK | Icon.ICO_EXCLAMATION
+        )
+        cmd_command = sys.executable + " " + Vars.db_main_raw_source_path
+        if is_program_running_exe():
+            cmd_command = Vars.db_main_executable_path
+        subprocess.call(cmd_command)
+        sys.exit(1)
+    else:
+        window.show()
+        app.exec()

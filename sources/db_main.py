@@ -1,19 +1,11 @@
-
-
-
 import os
-# -*- coding: <encoding name> -*-
 import sys
-import pprint
-
-from argparse import ArgumentParser
 sys.path.append(os.path.join(os.path.dirname(__file__),".."))
 from ui.ui_db_add import *
-from backend.util import init
+
 from backend.backend import *
 from backend.msgbox import *
 from backend.vars import Vars
-from backend.investigator import Investigator
 from PySide6.QtWidgets import QApplication,QMainWindow
 
 class db_main(QMainWindow):
@@ -21,6 +13,7 @@ class db_main(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.setWindowIcon(QIcon(u":/main/db.png"))
         self.ui.add_button.clicked.connect(self.check_input_value)
         self.db = database
         self.ui.item_name.textChanged.connect(self.check_name)

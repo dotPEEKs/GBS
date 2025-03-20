@@ -19,7 +19,8 @@ from PySide6.QtWidgets import (QAbstractItemView, QApplication, QComboBox, QFram
     QHBoxLayout, QHeaderView, QLabel, QLayout,
     QMainWindow, QPushButton, QSizePolicy, QTableWidget,
     QTableWidgetItem, QVBoxLayout, QWidget)
-from resources import resource_rc
+import resource_rc
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():

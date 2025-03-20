@@ -185,7 +185,7 @@ QPushButton {
              <item>
               <widget class="QFrame" name="frame_4">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(92, 91, 88);
+                <string notr="true">background-color: rgb(228, 237, 202);
 border-radius: 10px;</string>
                </property>
                <property name="frameShape">

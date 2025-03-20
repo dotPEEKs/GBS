@@ -24,7 +24,11 @@ class Repr:
         return repr_str
 def is_program_running_exe():
     return globals().get("__compiled__",False) # if program running exe nuitka uses __compiled__ not sys.frozen
+def create_dbs_dir_if_needed():
+    if not os.path.exists(Vars.target_dir):
+        os.makedirs(Vars.target_dir)
 def check_font_file(path):
+    create_dbs_dir_if_needed()
     font_src_path = get_resource_dir("font.ttf")
     if is_program_running_exe():
         font_src_path = os.path.join(os.path.dirname(path),"font.ttf")

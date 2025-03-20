@@ -33,7 +33,7 @@ def get_user_desktop():
     if desktop_path.startswith("%"):
         env = desktop_path[0:desktop_path.index("%",1)].replace("%","")
         desktop_path = os.path.join(os.getenv(env),"Desktop")
-    return desktop_path #BUG FIXED
+    return desktop_path
 def get_source_path(filename: str):
     base_path = os.path.join(os.path.dirname(__file__),"resources",filename)
     return base_path
@@ -78,7 +78,6 @@ def list_printers_pyusb():
 
 """
 
-
 def CreateRandChar():
     return "".join(random.sample(string.ascii_letters, 8))
 def CreateDesktopShortcuts(exe_path):
@@ -91,3 +90,6 @@ def CreateDesktopShortcuts(exe_path):
 
 def remove_dir(path):
     subprocess.call(["cmd.exe", "/c", "rmdir", "/s","/q", path])
+
+def is_program_running_exe():
+    return globals().get("__compiled__",False) # if program running exe nuitka uses __compiled__ not sys.frozen

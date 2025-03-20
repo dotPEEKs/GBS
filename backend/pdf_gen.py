@@ -68,7 +68,10 @@ class PDFGenerator(Repr):
             pdf.rect(x_position, y_position + 10, self.pdf_page_layout.barcode_width,
                      self.pdf_page_layout.barcode_height + 20)
 
-            aligned_x = x_position + self.calculate_text_alignment(pdf, barcode_data.item_name, "Helvetica", 10,self.pdf_page_layout.barcode_width)
+            if len(barcode_data.item_name) > 15:
+                barcode_data.item_name = barcode_data.item_name[:8] + "..." + barcode_data.item_name[-4:]
+            aligned_x = x_position + self.calculate_text_alignment(pdf, barcode_data.item_name, "Helvetica", 10,
+                                                                   self.pdf_page_layout.barcode_width)
             pdf.drawString(aligned_x, position_y, convert_turkish_char_to_eng(barcode_data.item_name))
             page_index+=1
         pdf.save()

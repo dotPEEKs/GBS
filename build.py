@@ -63,7 +63,7 @@ def build_setup():
 files = {
     r"sources\main_window.py":{
         "icon":get_resource_dir("db.ico"),
-        "dbg":True, # disables windows console mode
+        "dbg":False, # disables windows console mode
         "pyside6":True,
         "extra_files":[{
             "src":r".\resources\font.ttf",
@@ -72,7 +72,7 @@ files = {
     },
     r"sources\db_main.py":{
         "icon":get_resource_dir("db.ico"),
-        "dbg":True,
+        "dbg":False,
         "pyside6":True
     }
 }

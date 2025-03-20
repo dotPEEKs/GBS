@@ -58,3 +58,5 @@ class Database:
             with open(self.db_path,"w") as f:
                 f.write(json.dumps(result,indent = 4))
             print(result)
+    def size(self):
+        return len(self.get_db()["barcodes"])
