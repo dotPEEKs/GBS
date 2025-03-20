@@ -2,14 +2,14 @@ import os
 import unicodedata
 import string
 import random
-import platform
 import winreg
 import subprocess
-import win32print
 from pathlib import Path
 from backend.vars import Vars
 from win32com.client import Dispatch
 from backend.enum import DigitsEnums
+
+
 def get_reg(name,path):
     try:
         registry_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0,
@@ -18,7 +18,7 @@ def get_reg(name,path):
         winreg.CloseKey(registry_key)
         return value
     except WindowsError:
-        return None
+        return DigitsEnums.ENUM_BAD_PROGRESS
 
 def get_resource_dir(fname: str) -> str:
     return os.path.join(Path(__file__).parent.parent,"resources",fname)
@@ -44,42 +44,21 @@ def init():
     if not os.path.exists(Vars.json_path):
         with open(Vars.json_path,"w") as f:
             pass
+
 def convert_turkish_char_to_eng(input):
     normalized = unicodedata.normalize("NFD",input)
     return "".join(char for char in normalized if not unicodedata.combining(char)).replace("ı","i")
+
 def get_barcode_type(barcode) -> dict:
     for barcode_name,barcodes in Vars.barcodes_length.items():
         if len(barcode) == barcodes["length"]:
-            return barcode_name,barcodes["handler"]
-    return DigitsEnums.ENUM_BAD_PROGRESS
-def get_barcode_len(barcode):
-    for _,barcodes in barcodes_length.items():
-        if len(barcode) == barcodes["length"]:
-            return barcodes["length"]
-    return DigitsEnums.ENUM_BAD_PROGRESS
+            return barcode_name
+    return DigitsEnums.BAD_BARCODE_TYPE
 
-"""def list_printers():
-    print("Pyserial sonuçları")
-    import serial.tools.list_ports
-    ports = serial.tools.list_ports.comports()
-    for port in ports:
-        print(f"Port: {port.device}, Name: {port.name}, Description: {port.description}")
-r
-def list_printers_pyusb():
-    print("Pyusb sonuçları")
-    import usb.core
-    import usb.util
-
-    # Tüm USB cihazlarını ara
-    devices = usb.core.find(find_all=True)
-
-    for device in devices:
-        print(f"ID: {hex(device.idVendor)}:{hex(device.idProduct)} - {device}")
-
-"""
 
 def CreateRandChar():
     return "".join(random.sample(string.ascii_letters, 8))
+
 def CreateDesktopShortcuts(exe_path):
     lnk_path = os.path.basename(os.path.splitext(exe_path)[0]) + ".lnk"
     lnk_path = os.path.join(get_user_desktop(), lnk_path)

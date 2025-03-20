@@ -6,6 +6,8 @@ class DigitsEnums(IntEnum):
     BAD_BARCODE_LEN = Auto()
     BAD_BARCODE_TYPE = Auto()
     BAD_PRINT_DEVICE = Auto()
+    BAD_JSON_FILE = Auto()
+    NON_EXISTING_KEY = Auto()
 
 class Index:
     INDEX_ITEM_NAME = 0

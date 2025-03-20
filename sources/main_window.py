@@ -16,32 +16,38 @@ from backend.enum import Defaults
 class GBSMain(QMainWindow,Ui_MainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
+
+        self.db = Database(database_path = Vars.json_path)
+        self.barcode_container = BRCodeContainer()
+
         self.setWindowTitle("GENEL BARKOD SİSTEMİ")
         self.setWindowIcon(QIcon(u":/main/db.png"))
         self.setupUi(self)
 
+        # Widget yapılandırmaları
+        self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","SEÇ"])
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.centralwidget.setStyleSheet("QTableWidget::item { color: \"black\";}")
         self.tableWidget.horizontalHeader().setStyleSheet("::section { background-color: 'transparent'; \ncolor: 'black';}")
-        self.tableWidget.setStyleSheet("""QTableCornerButton::section { background-color: 'transparent'}""") # buradaki kod sayesinde tablo widgetindeki köşe butonunun rengini kaldırdık 
+        self.tableWidget.setStyleSheet("""QTableCornerButton::section { background-color: 'transparent'}""")
         self.tableWidget.setCornerButtonEnabled(False)
         self.tableWidget.verticalHeader().setSectionResizeMode(QHeaderView.Fixed) # dikey sekmeyi fare ile resizing yapmayı bloklamak için
         self.tableWidget.verticalHeader().setStyleSheet("::section { background-color: 'transparent';\n color: 'black'; }")
         self.tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers) # bu hücrelerdeki yazıları düzenlenmesini bloklamak için
-        self.tableWidget.setHorizontalHeaderLabels(["URUN ADI","BARKOD","ADET","BARKOD TIPI","SEÇ"])
-        self.db = Database(Vars.json_path)
-        self.comboBox.view().setMinimumWidth(100)
-        self.barcode_container = BRCodeContainer()
-        self.tableWidget.setRowCount(len(self.db.get_db()["barcodes"]))
+        self.comboBox.view().setMinimumWidth(100) # combobox'ın yatay uzunluğunu sınırlıyoruz
+        self.tableWidget.setRowCount(self.db.size())
+
         self.pushButton.clicked.connect(self.print_all_barcode)
         self.pushButton_2.clicked.connect(self.clear_all_selected_barcodes)
+
+
         self.set_all_brcode()
         self.set_all_printers()
     def set_all_printers(self):
         for printer in Printer.list_printer():
             self.comboBox.addItem(printer.printer_name)
     def set_all_brcode(self):
-        for index,barcode_data in enumerate(self.db.get_db()["barcodes"].items()): # NOT:get_db methodu yeniden adlandırlacak ayrıca direkt barkodları getirecek
+        for index,barcode_data in enumerate(self.db.read().items()): # NOT:get_db methodu yeniden adlandırlacak ayrıca direkt barkodları getirecek
             item_name_widget = QTableWidgetItem(barcode_data[0])
             barcode_type_widget = QTableWidgetItem(barcode_data[1]["barcode_type"])
             barcode_type_widget.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -130,6 +136,7 @@ class GBSMain(QMainWindow,Ui_MainWindow):
 if __name__ == "__main__":
     check_font_file(__file__)
     app = QApplication([])
+    init()
     window = GBSMain()
     if window.db.size() < 1:
         MessageBox(
