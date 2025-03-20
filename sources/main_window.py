@@ -23,7 +23,7 @@ class GBSMain(QMainWindow,Ui_MainWindow):
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.centralwidget.setStyleSheet("QTableWidget::item { color: \"black\";}")
         self.tableWidget.horizontalHeader().setStyleSheet("::section { background-color: 'transparent'; \ncolor: 'black';}")
-        self.tableWidget.setStyleSheet("""QTableCornerButton::section { background-color: 'transparent'}""")
+        self.tableWidget.setStyleSheet("""QTableCornerButton::section { background-color: 'transparent'}""") # buradaki kod sayesinde tablo widgetindeki köşe butonunun rengini kaldırdık 
         self.tableWidget.setCornerButtonEnabled(False)
         self.tableWidget.verticalHeader().setSectionResizeMode(QHeaderView.Fixed) # dikey sekmeyi fare ile resizing yapmayı bloklamak için
         self.tableWidget.verticalHeader().setStyleSheet("::section { background-color: 'transparent';\n color: 'black'; }")
