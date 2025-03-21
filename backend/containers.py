@@ -1,7 +1,7 @@
 import win32print
 
 from backend import *
-from backend.backend import Database
+from backend.database import Database
 
 
 class BRCodeContainer(Repr):

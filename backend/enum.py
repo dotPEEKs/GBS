@@ -1,7 +1,7 @@
-from enum import IntEnum
+from enum import IntEnum as EnumType
 from enum import auto as Auto
 
-class DigitsEnums(IntEnum):
+class DigitsEnums(EnumType):
     ENUM_BAD_PROGRESS = Auto()
     BAD_BARCODE_LEN = Auto()
     BAD_BARCODE_TYPE = Auto()
@@ -18,5 +18,4 @@ class Index:
 
 class Defaults:
     DEFAULT_QLINE_EDIT_VALUE = 1
-
 

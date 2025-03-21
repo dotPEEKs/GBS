@@ -6,11 +6,12 @@ from ui.ui_main_window import Ui_MainWindow
 from PySide6.QtWidgets import *
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
-from backend.backend import *
+from backend.database import Database
 from backend.containers import BRCodeContainer
 from backend.pdf_gen import PDFGenerator
 from backend import check_font_file
 from backend.msgbox import *
+from backend.vars import Vars
 from backend.enum import Index
 from backend.enum import Defaults
 class GBSMain(QMainWindow,Ui_MainWindow):
@@ -118,7 +119,7 @@ class GBSMain(QMainWindow,Ui_MainWindow):
                 qline_edit_data = self.tableWidget.cellWidget(row,Index.INDEX_QLINE_EDIT).findChild(QLineEdit)
                 item_barcode_type = self.tableWidget.item(row,Index.INDEX_BARCODE_TYPE).text()
                 self.barcode_container.push_back(
-                    item_name = convert_turkish_char_to_eng(item_name),
+                    item_name = item_name,
                     item_brcode_type = item_barcode_type,
                     item_brcode = item_barcode,
                     brcode_count = qline_edit_data.text()
@@ -136,7 +137,6 @@ class GBSMain(QMainWindow,Ui_MainWindow):
 if __name__ == "__main__":
     check_font_file(__file__)
     app = QApplication([])
-    init()
     window = GBSMain()
     if window.db.size() < 1:
         MessageBox(

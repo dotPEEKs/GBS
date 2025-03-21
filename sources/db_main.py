@@ -3,7 +3,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__),".."))
 from ui.ui_db_add import *
 
-from backend.backend import *
+from backend.database import Database
 from backend.msgbox import *
 from backend.vars import Vars
 from PySide6.QtWidgets import QApplication,QMainWindow
@@ -30,7 +30,7 @@ class db_main(QMainWindow):
                 box=Dialogs.DIA_OK | Icon.ICO_INFO
             )
             return
-        if self.db.insert_db(item_name,item_barcode):
+        if self.db.add_item(item_name,item_barcode):
             MessageBox(
                 title = "Başarılı :)",
                 text = "Ürün veritabanına eklendi :)",
@@ -42,7 +42,6 @@ class db_main(QMainWindow):
                 text = self.db.get_last_error(),
                 box = Dialogs.DIA_OK | Icon.ICO_EXCLAMATION
             )
-            raise Exception("This is fucking error")
     def check_brcode_type(self):
         text_table = {
             6:{
@@ -73,10 +72,7 @@ class db_main(QMainWindow):
             self.ui.item_barcode.setText("")
 
 def main():
-    init()
-    database = Database(Vars.json_path)
-    database = Database(db_path=Vars.json_path)
-    database.init_db()
+    database = Database(database_path = Vars.json_path)
     app = QApplication(sys.argv)
     window = db_main(database=database)
     window.show()
