@@ -1,14 +1,9 @@
-* GÜNCELLEME
+# Güncelleme
 
-* PROGRAM GENEL HATLARIYLA SORUNSUZ BİR ŞEKİLDE ÇALIŞABİLİYOR
+* Program artık son haline gelmiştir
 
-# BİLİNEN EKSİKLER/HATALAR
+* Bilinen bir bug yok
 
-* YAZICI KISMI ÇALIŞMAYABİLİR
+# Bilinen eksikler 
 
-* PROGRAM VERİTABANINDA HERHANGİ BİR İTEM OLMAMASINA RAĞMEN HALA ÇALIŞIYOR
-
-* GEREKSİZ İMPORTLAR SİLİNECEK
-
-# Otomatik derlenen exe'yi indirmek için
-* https://github.com/dotPEEKs/GBS/releases/tag/Release
+* Sadece veritabanından barkod silme yok 
