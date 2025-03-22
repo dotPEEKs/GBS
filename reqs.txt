@@ -1,0 +1,5 @@
+nuitka
+pyside6
+pywin32
+reportlab
+python-barcode

@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="main">
+    <file>vecteezy_close-button-icon_12744230-removebg-preview.png</file>
+    <file>clean.png</file>
+    <file>printer.png</file>
+    <file>main_screen_text.png</file>
+    <file>invalid.png</file>
+    <file>valid.png</file>
+    <file>db.png</file>
+  </qresource>
+</RCC>
